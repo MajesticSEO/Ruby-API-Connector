@@ -33,10 +33,11 @@
 
 =end
 
-require 'net/http'
-require 'uri'
 require 'cgi'
 require 'majesticseo-external-rpc/response'
+require 'net/http'
+require 'net/https'
+require 'uri'
 
 class ApiService
 
@@ -44,7 +45,7 @@ class ApiService
 	# 'application_id' is the unique identifier for your application - for api requests, this is your "api key" ... 
 	#	for OpenApp request, this is your "private key".
 	# 'endpoint' is required and must point to the url you wish to target; ie: enterprise or developer.
-	# E.g. api_service = ApiService.new('9A7R8Q4T8FA7GBYA4', 'http://developer.majesticseo.com/api_command');
+	# E.g. api_service = ApiService.new('9A7R8Q4T8FA7GBYA4', 'https://developer.majestic.com/api_command');
 	def initialize(application_id, endpoint)
 		@application_id = application_id;
 		@endpoint = endpoint;
@@ -72,18 +73,21 @@ class ApiService
 	# 'parameters' a hash containing the command parameters.
 	# 'timeout' specifies the amount of time to wait before aborting the transaction. This defaults to 5 seconds.
 	def execute_request(query_parameters, timeout)
-		query = "";
-		
-		query_parameters.each do |key, value|
-		  encoded_value = CGI::escape(value);
-		  query << "#{key}=#{encoded_value}&";
-		end
-
-		query = query.chop;
 		timeout(timeout) do
-		  uri = URI.parse(@endpoint);
-		  uri.query = query;
-		  Response.new(uri);
+		  uri = URI.parse(@endpoint);		
+      
+      https = Net::HTTP.new(uri.host, uri.port);
+      
+      if(@endpoint =~ /^https:\/\//)
+        https.use_ssl = true;
+      end
+      
+      request = Net::HTTP::Post.new(uri.path);
+      request.set_form_data(query_parameters);
+      
+      response = https.request(request);
+      
+      Response.new(response.body);
 		end
 
 		rescue Timeout::Error

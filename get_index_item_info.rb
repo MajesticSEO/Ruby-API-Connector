@@ -35,7 +35,7 @@
 
 # NOTE: The code below is specifically for the GetIndexItemInfo API command
 #       For other API commands, the arguments required may differ.
-#       Please refer to the Majestic SEO Developer Wiki for more information
+#       Please refer to the Majestic Developer Wiki for more information
 #       regarding other API commands and their arguments.
 
 
@@ -44,26 +44,26 @@ $: << File.expand_path(File.dirname(__FILE__));
 
 require 'majesticseo-external-rpc/api_service'
 
-endpoint = "http://enterprise.majesticseo.com/api_command";
+endpoint = "https://api.majestic.com/api_command";
 
 puts "\n***********************************************************" +
   "*****************";
 
 puts "\nEndpoint: #{endpoint}";
 
-if("http://enterprise.majesticseo.com/api_command" == endpoint)
+if("https://api.majestic.com/api_command" == endpoint)
   puts "\nThis program is hard-wired to the Enterprise API.";
 
   puts "\nIf you do not have access to the Enterprise API, " +
-    "change the endpoint to: \nhttp://developer.majesticseo.com/api_command.";
+    "change the endpoint to: \nhttps://developer.majestic.com/api_command.";
 else
   puts "\nThis program is hard-wired to the Developer API " +
     "and hence the subset of data \nreturned will be substantially " +
     "smaller than that which will be returned from \neither the " +
-    "Enterprise API or the Majestic SEO website.";
+    "Enterprise API or the Majestic website.";
 
   puts "\nTo make this program use the Enterprise API, change " +
-    "the endpoint to: \nhttp://enterprise.majesticseo.com/api_command.";
+    "the endpoint to: \nhttps://api.majestic.com/api_command.";
 end
 
 puts "\n***********************************************************" +
@@ -77,7 +77,7 @@ puts "\n\nThis example program will return key information about \"index items\"
 api_key = gets.chomp;
 
 puts "\nPlease enter the list of items you wish to query seperated by " +
-     "commas: \n(e.g. majesticseo.com, majestic12.co.uk)\n";
+     "commas: \n(e.g. majestic.com, majestic12.co.uk)\n";
 
 items_to_query = gets.chomp;
 items = items_to_query.split(/, /);
@@ -113,7 +113,7 @@ if(response.is_ok)
     end
   end
 
-  if("http://developer.majesticseo.com/api_command" == endpoint)
+  if("https://developer.majestic.com/api_command" == endpoint)
     puts "\n\n***********************************************************" +
       "*****************";
 
@@ -122,10 +122,10 @@ if(response.is_ok)
     puts"\nThis program is hard-wired to the Developer API " +
       "and hence the subset of data \nreturned will be substantially " +
       "smaller than that which will be returned from \neither the " +
-      "Enterprise API or the Majestic SEO website.";
+      "Enterprise API or the Majestic website.";
 
     puts "\nTo make this program use the Enterprise API, change " +
-      "the endpoint to: \nhttp://enterprise.majesticseo.com/api_command.";
+      "the endpoint to: \nhttps://api.majestic.com/api_command.";
 
     puts "\n***********************************************************" +
       "*****************";
@@ -141,13 +141,13 @@ else
   puts "\n  Endpoint: \t#{endpoint}";
   puts "  API Key: \t#{api_key}";
 
-  if("http://enterprise.majesticseo.com/api_command" == endpoint)
+  if("https://api.majestic.com/api_command" == endpoint)
     puts "\n  Is this API Key valid for this Endpoint?";
 
     puts "\n  This program is hard-wired to the Enterprise API.";
 
     puts "\n  If you do not have access to the Enterprise API, " +
-      "change the endpoint to: \n  http://developer.majesticseo.com/api_command.";
+      "change the endpoint to: \n  https://developer.majestic.com/api_command.";
   end
 
   puts "\n***********************************************************" +

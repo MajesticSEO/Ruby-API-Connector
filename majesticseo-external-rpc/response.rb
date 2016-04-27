@@ -57,7 +57,7 @@ class Response
     end
 
     if(!xml_data.nil?)
-      parser = XML::SaxParser.io(open(xml_data));
+      parser = XML::SaxParser.string(xml_data);
       parser.callbacks = CallBacks.new(self);
       parser.parse;
     end
